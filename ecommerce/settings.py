@@ -1,3 +1,4 @@
+# flake8: noqa
 """
 Django settings for ecommerce project.
 
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'users',
     'rest_framework',
 ]
 
