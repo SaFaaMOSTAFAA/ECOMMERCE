@@ -10,7 +10,7 @@ class AdminViewSet(ModelViewSet):
     queryset = Admin.objects.all()
     serializer_class = AdminSerializer
     filter_backends = [filters.SearchFilter]
-    search_fields = ['user_name', 'phone']
+    search_fields = ['full_name', 'user_name', 'phone']
 
     def perform_create(self, serializer):
         password = self.request.data.get('password')
