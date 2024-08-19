@@ -7,4 +7,4 @@ class AdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Admin
-        fields = "__all__"
+        fields = ['id', 'full_name', 'phone', 'user_name']
