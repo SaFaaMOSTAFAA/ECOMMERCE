@@ -37,3 +37,19 @@ class Admin(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.user_name
+
+
+class Trader(models.Model):
+    full_name = models.CharField(max_length=100)
+    phone = models.CharField(validators=[phone_validator], max_length=25)
+    user_name = models.CharField(max_length=100, unique=True)
+    password = models.CharField(max_length=128)
+    address = models.CharField(max_length=200)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'user_name'
+    REQUIRED_FIELDS = ['full_name', 'phone']
+
+    def __str__(self):
+        return self.user_name

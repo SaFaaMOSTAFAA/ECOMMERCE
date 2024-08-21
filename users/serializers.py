@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
-from users.models import Admin
+from users.models import Admin, Trader
 
 
 class AdminSerializer(serializers.ModelSerializer):
@@ -9,6 +9,14 @@ class AdminSerializer(serializers.ModelSerializer):
     class Meta:
         model = Admin
         fields = ['id', 'full_name', 'phone', 'user_name', 'is_active']
+
+
+class TraderSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Trader
+        fields = [
+            'id', 'full_name', 'phone', 'user_name', 'is_active', 'address']
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
