@@ -5,3 +5,4 @@ flake8==7.1.1
 isort==5.13.2
 pytest==8.3.2
 psycopg2-binary==2.9.9
+djangorestframework-simplejwt==5.3.1
