@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import CustomerAccount
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100)
@@ -18,3 +20,10 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductReview(models.Model):
+    review = models.TextField()
+    rate = models.IntegerField()
+    product_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(CustomerAccount, on_delete=models.CASCADE)
