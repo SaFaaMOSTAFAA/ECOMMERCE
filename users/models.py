@@ -44,3 +44,8 @@ class Admin(UserAccount):
 
 class Trader(UserAccount):
     address = models.CharField(max_length=200)
+
+
+class CustomerAccount(UserAccount):
+    email = models.EmailField()
+    address = models.CharField(max_length=200)
