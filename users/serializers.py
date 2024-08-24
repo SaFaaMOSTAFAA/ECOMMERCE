@@ -25,12 +25,7 @@ class CustomerAccountSerializer(serializers.ModelSerializer):
         model = CustomerAccount
         fields = [
             'id',
-            'full_name',
-            'phone',
-            'user_name',
-            'is_active',
-            'address',
-            'email']
+            'full_name', 'phone', 'user_name', 'is_active', 'address', 'email']
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
