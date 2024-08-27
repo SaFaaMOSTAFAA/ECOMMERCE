@@ -27,7 +27,8 @@ SECRET_KEY = 'django-insecure-20rxph^@q7*mv_oaqywl%^d*o$fet%v)0ebdkw7s0#a2-bi(&8
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['ecomerce.aboadam-used.com', '127.0.0.1', 'localhost']
+
 
 
 # Application definition
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 REST_FRAMEWORK={
         'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -60,6 +62,24 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+    'OPTIONS',
+    'HEAD',
+]
+
+CORS_ALLOW_HEADERS = [
+    'content-type',
+    'authorization',
+    'x-csrftoken',
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
