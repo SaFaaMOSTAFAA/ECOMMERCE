@@ -48,10 +48,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+<<<<<<< HEAD
     'users',
     'products',
     'rest_framework',
     'rest_framework_simplejwt',
+=======
+    'rest_framework',
+>>>>>>> master
 ]
 REST_FRAMEWORK={
         'DEFAULT_AUTHENTICATION_CLASSES': (
