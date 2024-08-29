@@ -24,7 +24,7 @@ load_dotenv()
 SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = os.getenv('DEBUG')
 DATABASE_URL = os.getenv('DATABASE_URL')
-print("DATABASE_URL:", os.getenv('DATABASE_URL'))
+
 
 
 # Quick-start development settings - unsuitable for production
