@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'products',
     'rest_framework',
     'rest_framework_simplejwt',
+    'cart',
     'corsheaders',
 ]
 REST_FRAMEWORK = {
