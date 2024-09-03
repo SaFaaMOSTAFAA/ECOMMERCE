@@ -64,3 +64,22 @@ class CustomerAccountViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+
+
+class RegisterCustomerViewSet(ModelViewSet):
+    queryset = CustomerAccount.objects.all()
+    serializer_class = CustomerAccountSerializer
+
+    def perform_create(self, serializer):
+        password = self.request.data.get('password')
+        if password:
+            serializer.save(password=make_password(password))
+        else:
+            serializer.save()
+
+    def perform_update(self, serializer):
+        password = self.request.data.get('password')
+        if password:
+            serializer.save(password=make_password(password))
+        else:
+            serializer.save()
