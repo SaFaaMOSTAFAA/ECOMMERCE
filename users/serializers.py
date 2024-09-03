@@ -24,8 +24,11 @@ class CustomerAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAccount
         fields = [
-            'id',
-            'full_name', 'phone', 'user_name', 'is_active', 'address', 'email']
+            'id', 'full_name',
+            'phone', 'user_name', 'is_active', 'address', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True, 'required': True}
+        }
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
