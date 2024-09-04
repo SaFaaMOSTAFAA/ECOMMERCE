@@ -8,12 +8,12 @@ from products.serializers import (CategorySerializer,
 
 
 class CategoryViewSet(ModelViewSet):
-    queryset = Category.objects.all()
+    queryset = Category.objects.order_by('-id')
     serializer_class = CategorySerializer
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.all()
+    queryset = Product.objects.order_by('-id').select_related('category')
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
@@ -22,7 +22,8 @@ class ProductViewSet(ModelViewSet):
 
 
 class ProductReviewViewSet(ModelViewSet):
-    queryset = ProductReview.objects.all()
+    queryset = ProductReview.objects.order_by('-id').select_related(
+        'product', 'customer')
 
     def get_serializer_class(self):
         if self.request.method == 'GET':

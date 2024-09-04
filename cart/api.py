@@ -6,12 +6,13 @@ from cart.serializers import (CartItemSerializer, CartSerializer,
 
 
 class CartViewSet(ModelViewSet):
-    queryset = Cart.objects.all()
+    queryset = Cart.objects.order_by('-id').select_related('customer')
     serializer_class = CartSerializer
 
 
 class CartItemViewSet(ModelViewSet):
-    queryset = CartItem.objects.all()
+    queryset = CartItem.objects.order_by('-id').select_related(
+        'product', 'cart')
 
     def get_serializer_class(self):
         if self.request.method == 'GET':
