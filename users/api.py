@@ -8,7 +8,7 @@ from users.serializers import (AdminSerializer, CustomerAccountSerializer,
 
 
 class AdminViewSet(ModelViewSet):
-    queryset = Admin.objects.all()
+    queryset = Admin.objects.order_by('-id')
     serializer_class = AdminSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name', 'user_name', 'phone']
@@ -29,7 +29,7 @@ class AdminViewSet(ModelViewSet):
 
 
 class TraderViewSet(ModelViewSet):
-    queryset = Trader.objects.all()
+    queryset = Trader.objects.order_by('-id')
     serializer_class = TraderSerializer
 
     def perform_create(self, serializer):
@@ -48,7 +48,7 @@ class TraderViewSet(ModelViewSet):
 
 
 class CustomerAccountViewSet(ModelViewSet):
-    queryset = CustomerAccount.objects.all()
+    queryset = CustomerAccount.objects.order_by('-id')
     serializer_class = CustomerAccountSerializer
 
     def perform_create(self, serializer):
