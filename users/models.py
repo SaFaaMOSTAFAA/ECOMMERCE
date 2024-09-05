@@ -48,7 +48,6 @@ class Trader(UserAccount):
 
 
 class CustomerAccount(UserAccount):
-    # email = models.EmailField()
     address = models.CharField(max_length=200)
 
 

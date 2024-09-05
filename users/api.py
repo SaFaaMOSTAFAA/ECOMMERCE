@@ -85,12 +85,10 @@ class RequestPasswordReset(generics.GenericAPIView):
         if user:
             token_generator = PasswordResetTokenGenerator()
             token = token_generator.make_token(user)
-            expiration_date = timezone.now() + timedelta(hours=24)
+            expiration_date = timezone.now() + timedelta(hours=1)
 
-            reset = PasswordReset(email=email,
-                                  token=token, created_at=expiration_date)
-            reset.save()
-
+            reset = PasswordReset.objects.create(  # noqa
+                email=email, token=token, expiration_date=expiration_date)
             return Response({'success': token}, status=status.HTTP_200_OK)
         else:
             return Response({"error": "User with credentials not found"},
