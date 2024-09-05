@@ -27,6 +27,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin):
     phone = models.CharField(validators=[phone_validator], max_length=25)
     user_name = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=128)
+    email = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
@@ -47,5 +48,11 @@ class Trader(UserAccount):
 
 
 class CustomerAccount(UserAccount):
-    email = models.EmailField()
+    # email = models.EmailField()
     address = models.CharField(max_length=200)
+
+
+class PasswordReset(models.Model):
+    email = models.EmailField()
+    token = models.CharField(max_length=100)
+    created_at = models.DateTimeField(auto_now_add=True)
