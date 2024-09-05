@@ -73,10 +73,11 @@ class RegisterCustomerAPIView(APIView):
         serializer = CustomerAccountSerializer(data=request.data)
         if serializer.is_valid():
             password = self.request.data.get('password')
-            if password:
-                serializer.save(password=make_password(password))
-            else:
-                serializer.save()
-
+            if not password:
+                return Response(
+                    {"password": ["This field is required."]},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            serializer.save(password=make_password(password))
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
