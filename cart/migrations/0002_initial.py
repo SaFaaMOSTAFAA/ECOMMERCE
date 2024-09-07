@@ -9,19 +9,25 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('cart', '0001_initial'),
         ('products', '0001_initial'),
         ('users', '0001_initial'),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='productreview',
-            name='customer_id',
+            model_name='cart',
+            name='customer',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='users.customeraccount'),
         ),
         migrations.AddField(
-            model_name='productreview',
-            name='product_id',
+            model_name='cartitem',
+            name='cart',
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='cart.cart'),
+        ),
+        migrations.AddField(
+            model_name='cartitem',
+            name='product',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.product'),
         ),
     ]
