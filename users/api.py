@@ -1,10 +1,11 @@
 from datetime import timedelta
 
 from django.contrib.auth.hashers import make_password
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils import timezone
 from rest_framework import filters, generics, status
-from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from users.models import (Admin, CustomerAccount, PasswordReset, Trader,
@@ -73,6 +74,17 @@ class CustomerAccountViewSet(ModelViewSet):
             serializer.save()
 
 
+class RegisterCustomerAPIView(APIView):
+    def post(self, request, format=None):
+        serializer = CustomerAccountSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        password = request.data.get('password')
+        serializer.save(password=make_password(password))
+
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+      
+
 class RequestPasswordReset(generics.GenericAPIView):
     permission_classes = ()
     serializer_class = ResetPasswordRequestSerializer
@@ -125,3 +137,4 @@ class ResetPassword(generics.GenericAPIView):
             return Response({'success': 'Password updated'})
         else:
             return Response({'error': 'No user found'}, status=404)
+

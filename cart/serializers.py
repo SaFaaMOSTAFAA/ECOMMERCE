@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from cart.models import Cart, CartItem
 from products.serializers import ProductSerializer
-from users.serializers import CustomerAccountSerializer
 
 
 class CartSerializer(serializers.ModelSerializer):
@@ -20,7 +19,7 @@ class CartItemSerializer(serializers.ModelSerializer):
 
 
 class ListCartItemSerializer(serializers.ModelSerializer):
-    customeraccount = CustomerAccountSerializer()
+    cart = CartSerializer()
     product = ProductSerializer()
 
     class Meta:
