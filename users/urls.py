@@ -2,11 +2,8 @@ from django.urls import path
 from rest_framework.routers import DefaultRouter
 
 from users.api import (AdminViewSet, CustomerAccountViewSet,
-
-                       RegisterCustomerAPIView,
-
-                       RequestPasswordReset, ResetPassword, TraderViewSet)
-
+                       RegisterCustomerAPIView, RequestPasswordReset,
+                       ResetPassword, TraderViewSet)
 
 router = DefaultRouter()
 router.register(r'admins', AdminViewSet, basename="admins")
