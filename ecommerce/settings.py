@@ -76,8 +76,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
-    'query_inspector.middleware.QueryCountMiddleware',
 ]
+if DEBUG:
+    MIDDLEWARE.append('query_inspector.middleware.QueryCountMiddleware')
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
