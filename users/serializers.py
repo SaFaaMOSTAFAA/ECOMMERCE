@@ -8,8 +8,8 @@ class AdminSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Admin
-        fields = ['id', 'full_name', 'email',
-                  'phone', 'user_name', 'is_active', 'password']
+        fields = ['id', 'full_name', 'email', 'phone',
+                  'user_name', 'is_active', 'password', 'created', 'modified']
         extra_kwargs = {
             'password': {'write_only': True, 'required': True}
         }
@@ -20,8 +20,8 @@ class TraderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Trader
         fields = [
-            'id', 'full_name', 'email',
-            'phone', 'user_name', 'is_active', 'address', 'password']
+            'id', 'full_name', 'email', 'phone', 'user_name',
+            'is_active', 'address', 'password', 'created', 'modified']
         extra_kwargs = {
             'password': {'write_only': True, 'required': True}
         }
@@ -32,8 +32,8 @@ class CustomerAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomerAccount
         fields = [
-            'id', 'full_name', 'email',
-            'phone', 'user_name', 'is_active', 'address', 'email', 'password']
+            'id', 'full_name', 'email', 'phone', 'user_name',
+            'is_active', 'address', 'email', 'password', 'created', 'modified']
         extra_kwargs = {
             'password': {'write_only': True, 'required': True}
         }
