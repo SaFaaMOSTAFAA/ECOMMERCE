@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'cart',
     'corsheaders',
     'query_inspector',
+    'django_extensions',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',

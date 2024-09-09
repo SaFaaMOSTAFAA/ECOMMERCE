@@ -2,6 +2,7 @@ from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.core.validators import RegexValidator
 from django.db import models
+from django_extensions.db.models import TimeStampedModel
 
 phone_validator = RegexValidator(regex=r'^\d+$')
 
@@ -22,7 +23,7 @@ class UserAccountManager(BaseUserManager):
         return self.create_user(user_name, password, **extra_fields)
 
 
-class UserAccount(AbstractBaseUser, PermissionsMixin):
+class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     full_name = models.CharField(max_length=100)
     phone = models.CharField(validators=[phone_validator], max_length=25)
     user_name = models.CharField(max_length=100, unique=True)
