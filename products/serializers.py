@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from products.models import Category, Product, ProductReview
+from products.models import Category, Product, ProductReview, WishList
 from users.serializers import CustomerAccountSerializer
 
 
@@ -39,4 +39,20 @@ class ListProductReviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProductReview
+        fields = "__all__"
+
+
+class WishListSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = WishList
+        fields = "__all__"
+
+
+class ListWishListSerializer(serializers.ModelSerializer):
+    customer = CustomerAccountSerializer()
+    product = ProductSerializer()
+
+    class Meta:
+        model = WishList
         fields = "__all__"
