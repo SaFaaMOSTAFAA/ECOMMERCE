@@ -28,3 +28,8 @@ class ProductReview(TimeStampedModel):
     rate = models.IntegerField()
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
     customer = models.ForeignKey(CustomerAccount, on_delete=models.CASCADE)
+
+
+class WishList(TimeStampedModel):
+    customer = models.ForeignKey(CustomerAccount, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)

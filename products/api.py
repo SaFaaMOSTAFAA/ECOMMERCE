@@ -1,10 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 
-from products.models import Category, Product, ProductReview
+from products.models import Category, Product, ProductReview, WishList
 from products.serializers import (CategorySerializer,
                                   ListProductReviewSerializer,
                                   ListProductSerializer,
-                                  ProductReviewSerializer, ProductSerializer)
+                                  ListWishListSerializer,
+                                  ProductReviewSerializer, ProductSerializer,
+                                  WishListSerializer)
 
 
 class CategoryViewSet(ModelViewSet):
@@ -29,3 +31,13 @@ class ProductReviewViewSet(ModelViewSet):
         if self.request.method == 'GET':
             return ListProductReviewSerializer
         return ProductReviewSerializer
+
+
+class WishListViewSet(ModelViewSet):
+    queryset = WishList.objects.order_by('-id').select_related(
+        'product', 'customer')
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ListWishListSerializer
+        return WishListSerializer
