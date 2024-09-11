@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'query_inspector',
     'django_extensions',
+    'drf_spectacular',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS' : 'rest_framework.pagination.PageNumberPagination',
@@ -66,6 +67,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
      ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 AUTH_USER_MODEL = 'users.UserAccount'
 MIDDLEWARE = [
