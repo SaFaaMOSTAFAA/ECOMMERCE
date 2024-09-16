@@ -16,6 +16,5 @@ urlpatterns += [
     path('register-customers/',
          RegisterCustomerAPIView.as_view(), name='register-customers'),
     path('reset-password/<str:token>/', ResetPassword.as_view()),
-    path('request-password-reset/', RequestPasswordReset.as_view())
-
+    path('request-password-reset/', RequestPasswordReset.as_view()),
 ]
