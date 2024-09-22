@@ -28,7 +28,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     phone = models.CharField(validators=[phone_validator], max_length=25)
     user_name = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=128)
-    email = models.EmailField(unique=True)
+    email = models.CharField(max_length=100)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
