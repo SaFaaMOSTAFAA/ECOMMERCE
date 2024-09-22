@@ -28,13 +28,21 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     phone = models.CharField(validators=[phone_validator], max_length=25)
     user_name = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=128)
-    email = models.CharField(max_length=100)
+    email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
 
     objects = UserAccountManager()
-    USERNAME_FIELD = 'user_name'
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['full_name', 'phone']
+
+    def get_role(self):
+        if hasattr(self, 'admin'):
+            return "admin"
+        elif hasattr(self, 'trader'):
+            return "trader"
+        elif hasattr(self, 'customeraccount'):
+            return "customeraccount"
 
     def __str__(self):
         return self.user_name
