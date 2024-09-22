@@ -61,4 +61,9 @@ class ResetPasswordSerializer(serializers.Serializer):
 
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    pass
+    @classmethod
+    def get_token(cls, user):
+        data = super().get_token(user)
+        data['role'] = user.get_role()
+        data['email'] = user.email
+        return data
