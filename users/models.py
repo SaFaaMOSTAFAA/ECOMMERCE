@@ -33,7 +33,7 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     is_staff = models.BooleanField(default=False)
 
     objects = UserAccountManager()
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'user_name'
     REQUIRED_FIELDS = ['full_name', 'phone']
 
     def get_role(self):
