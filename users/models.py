@@ -36,6 +36,14 @@ class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
     USERNAME_FIELD = 'user_name'
     REQUIRED_FIELDS = ['full_name', 'phone']
 
+    def get_role(self):
+        if hasattr(self, 'admin'):
+            return "admin"
+        elif hasattr(self, 'trader'):
+            return "trader"
+        elif hasattr(self, 'customeraccount'):
+            return "customeraccount"
+
     def __str__(self):
         return self.user_name
 
