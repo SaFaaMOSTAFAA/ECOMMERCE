@@ -12,5 +12,5 @@ django-cors-headers==4.4.0
 django-environ==0.11.2
 django-query-inspector==1.2.9
 django-extensions==3.2.3
+drf-spectacular==0.27.2
 pytest-django==4.9.0
-
