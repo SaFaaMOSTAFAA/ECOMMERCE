@@ -50,6 +50,8 @@ class TraderViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+        return Response({"massage": "Trader created successfully"},
+                        status=status.HTTP_201_CREATED)
 
     def perform_update(self, serializer):
         password = self.request.data.get('password')
@@ -57,11 +59,13 @@ class TraderViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+        return Response({"massage": "Trader created successfully"},
+                        status=status.HTTP_200_OK)
 
 
 @receiver(post_save, sender=Trader)
 def create_trader_profile(sender, instance, created, **kwargs):
-    if created and isinstance(instance, Trader):
+    if created:
         send_mail(
             'Welcome to our website',
             f"Thank you for using our website.😃 , {instance.full_name}!",
@@ -69,12 +73,6 @@ def create_trader_profile(sender, instance, created, **kwargs):
             [instance.email],
             fail_silently=False,
             )
-        return Response(
-            {"message": "Emails sent successfully"},
-            status=status.HTTP_200_OK)
-    return Response(
-        {"error": "it's wrong email"},
-        status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class CustomerAccountViewSet(ModelViewSet):
