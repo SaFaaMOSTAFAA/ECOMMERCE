@@ -1,7 +1,11 @@
 from datetime import timedelta
 
+from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import send_mail
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.utils import timezone
 from rest_framework import filters, generics, status
 from rest_framework.response import Response
@@ -46,6 +50,8 @@ class TraderViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+        return Response({"massage": "Trader created successfully"},
+                        status=status.HTTP_201_CREATED)
 
     def perform_update(self, serializer):
         password = self.request.data.get('password')
@@ -53,6 +59,20 @@ class TraderViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+        return Response({"massage": "Trader created successfully"},
+                        status=status.HTTP_200_OK)
+
+
+@receiver(post_save, sender=Trader)
+def create_trader_profile(sender, instance, created, **kwargs):
+    if created:
+        send_mail(
+            'Welcome to our website',
+            f"Thank you for using our website.😃 , {instance.full_name}!",
+            settings.DEFAULT_FROM_EMAIL,
+            [instance.email],
+            fail_silently=False,
+            )
 
 
 class CustomerAccountViewSet(ModelViewSet):
