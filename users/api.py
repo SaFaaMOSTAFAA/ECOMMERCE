@@ -85,6 +85,8 @@ class CustomerAccountViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+        return Response({"massage": "customer accout  created successfully"},
+                        status=status.HTTP_201_CREATED)
 
     def perform_update(self, serializer):
         password = self.request.data.get('password')
@@ -92,6 +94,21 @@ class CustomerAccountViewSet(ModelViewSet):
             serializer.save(password=make_password(password))
         else:
             serializer.save()
+        return Response({"massage": "customer accout  created successfully"},
+                        status=status.HTTP_201_CREATED)
+
+
+@receiver(post_save, sender=CustomerAccount)
+def create_customeraccount_profile(sender, instance, created, **kwargs):
+    if created:
+        send_mail(
+            'Welcome to our website',
+            f"Thank you for using our website.😃 , {instance.full_name}!",
+            settings.DEFAULT_FROM_EMAIL,
+            [instance.email],
+            fail_silently=False,
+
+        )
 
 
 class RegisterCustomerAPIView(APIView):
