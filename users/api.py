@@ -26,18 +26,10 @@ class AdminViewSet(ModelViewSet):
     search_fields = ['full_name', 'user_name', 'phone']
 
     def perform_create(self, serializer):
-        password = self.request.data.get('password')
-        if password:
-            serializer.save(password=make_password(password))
-        else:
-            serializer.save()
+        serializer.save()
 
     def perform_update(self, serializer):
-        password = self.request.data.get('password')
-        if password:
-            serializer.save(password=make_password(password))
-        else:
-            serializer.save()
+        serializer.save()
 
 
 class TraderViewSet(ModelViewSet):
@@ -45,20 +37,12 @@ class TraderViewSet(ModelViewSet):
     serializer_class = TraderSerializer
 
     def perform_create(self, serializer):
-        password = self.request.data.get('password')
-        if password:
-            serializer.save(password=make_password(password))
-        else:
-            serializer.save()
-        return Response({"massage": "Trader created successfully"},
+        serializer.save()
+        return Response({"message": "Trader created successfully"},
                         status=status.HTTP_201_CREATED)
 
     def perform_update(self, serializer):
-        password = self.request.data.get('password')
-        if password:
-            serializer.save(password=make_password(password))
-        else:
-            serializer.save()
+        serializer.save()
         return Response({"massage": "Trader created successfully"},
                         status=status.HTTP_200_OK)
 
@@ -80,18 +64,10 @@ class CustomerAccountViewSet(ModelViewSet):
     serializer_class = CustomerAccountSerializer
 
     def perform_create(self, serializer):
-        password = self.request.data.get('password')
-        if password:
-            serializer.save(password=make_password(password))
-        else:
-            serializer.save()
+        serializer.save()
 
     def perform_update(self, serializer):
-        password = self.request.data.get('password')
-        if password:
-            serializer.save(password=make_password(password))
-        else:
-            serializer.save()
+        serializer.save()
 
 
 class RegisterCustomerAPIView(APIView):
