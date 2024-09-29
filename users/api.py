@@ -1,11 +1,7 @@
 from datetime import timedelta
 
-# from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
-# from django.core.mail import send_mail
-# from django.db.models.signals import post_save
-# from django.dispatch import receiver
 from django.utils import timezone
 from rest_framework import filters, generics, status
 from rest_framework.response import Response
@@ -17,6 +13,7 @@ from users.models import (Admin, CustomerAccount, PasswordReset, Trader,
 from users.serializers import (AdminSerializer, CustomerAccountSerializer,
                                ResetPasswordRequestSerializer,
                                ResetPasswordSerializer, TraderSerializer)
+from users.signals import create_customeraccount_profile, create_trader_profile # noqa
 
 
 class AdminViewSet(ModelViewSet):
