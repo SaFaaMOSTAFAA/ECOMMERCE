@@ -15,19 +15,8 @@ class AdminSerializer(serializers.ModelSerializer):
             'password': {'write_only': True, 'required': True}
         }
 
-        def validate_password(self, value):
-            return make_password(value)
-
-        def create(self, validated_data):
-            instance = super().create(validated_data)
-            return instance
-
-        def update(self, instance, validated_data):
-            password = validated_data['password']
-            if password:
-                instance.password = make_password(password)
-            instance.save()
-            return instance
+    def validate_password(self, value):
+        return make_password(value)
 
 
 class TraderSerializer(serializers.ModelSerializer):
@@ -41,19 +30,8 @@ class TraderSerializer(serializers.ModelSerializer):
             'password': {'write_only': True, 'required': True}
         }
 
-        def validate_password(self, value):
-            return make_password(value)
-
-        def create(self, validated_data):
-            instance = super().create(validated_data)
-            return instance
-
-        def update(self, instance, validated_data):
-            password = validated_data['password']
-            if password:
-                instance.password = make_password(password)
-            instance.save()
-            return instance
+    def validate_password(self, value):
+        return make_password(value)
 
 
 class CustomerAccountSerializer(serializers.ModelSerializer):
@@ -67,19 +45,8 @@ class CustomerAccountSerializer(serializers.ModelSerializer):
             'password': {'write_only': True, 'required': True}
         }
 
-        def validate_password(self, value):
-            return make_password(value)
-
-        def create(self, validated_data):
-            instance = super().create(validated_data)
-            return instance
-
-        def update(self, instance, validated_data):
-            password = validated_data['password']
-            if password:
-                instance.password = make_password(password)
-            instance.save()
-            return instance
+    def validate_password(self, value):
+        return make_password(value)
 
 
 class ResetPasswordRequestSerializer(serializers.ModelSerializer):

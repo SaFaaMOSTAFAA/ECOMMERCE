@@ -13,7 +13,6 @@ from users.models import (Admin, CustomerAccount, PasswordReset, Trader,
 from users.serializers import (AdminSerializer, CustomerAccountSerializer,
                                ResetPasswordRequestSerializer,
                                ResetPasswordSerializer, TraderSerializer)
-from users.signals import create_customeraccount_profile, create_trader_profile # noqa
 
 
 class AdminViewSet(ModelViewSet):
@@ -22,37 +21,15 @@ class AdminViewSet(ModelViewSet):
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name', 'user_name', 'phone']
 
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def perform_update(self, serializer):
-        serializer.save()
-
 
 class TraderViewSet(ModelViewSet):
     queryset = Trader.objects.order_by('-id')
     serializer_class = TraderSerializer
 
-    def perform_create(self, serializer):
-        serializer.save()
-        return Response({"message": "Trader created successfully"},
-                        status=status.HTTP_201_CREATED)
-
-    def perform_update(self, serializer):
-        serializer.save()
-        return Response({"massage": "Trader created successfully"},
-                        status=status.HTTP_200_OK)
-
 
 class CustomerAccountViewSet(ModelViewSet):
     queryset = CustomerAccount.objects.order_by('-id')
     serializer_class = CustomerAccountSerializer
-
-    def perform_create(self, serializer):
-        serializer.save()
-
-    def perform_update(self, serializer):
-        serializer.save()
 
 
 class RegisterCustomerAPIView(APIView):
