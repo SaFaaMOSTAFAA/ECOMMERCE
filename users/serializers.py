@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
@@ -14,6 +15,9 @@ class AdminSerializer(serializers.ModelSerializer):
             'password': {'write_only': True, 'required': True}
         }
 
+    def validate_password(self, value):
+        return make_password(value)
+
 
 class TraderSerializer(serializers.ModelSerializer):
 
@@ -26,6 +30,9 @@ class TraderSerializer(serializers.ModelSerializer):
             'password': {'write_only': True, 'required': True}
         }
 
+    def validate_password(self, value):
+        return make_password(value)
+
 
 class CustomerAccountSerializer(serializers.ModelSerializer):
 
@@ -37,6 +44,9 @@ class CustomerAccountSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'password': {'write_only': True, 'required': True}
         }
+
+    def validate_password(self, value):
+        return make_password(value)
 
 
 class ResetPasswordRequestSerializer(serializers.ModelSerializer):
