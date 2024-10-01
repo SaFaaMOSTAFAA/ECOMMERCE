@@ -10,6 +10,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from users.models import (Admin, CustomerAccount, PasswordReset, Trader,
                           UserAccount)
+from users.permissions import IsAdmin
 from users.serializers import (AdminSerializer, CustomerAccountSerializer,
                                ResetPasswordRequestSerializer,
                                ResetPasswordSerializer, TraderSerializer)
@@ -25,6 +26,7 @@ class AdminViewSet(ModelViewSet):
 class TraderViewSet(ModelViewSet):
     queryset = Trader.objects.order_by('-id')
     serializer_class = TraderSerializer
+    permission_classes = [IsAdmin]
 
 
 class CustomerAccountViewSet(ModelViewSet):
