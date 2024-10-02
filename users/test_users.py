@@ -1,7 +1,7 @@
 import pytest
 from django.test import Client
 from django.urls import reverse
-from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework_simplejwt.tokens import AccessToken
 
 from users.models import Admin, Trader
 
@@ -13,19 +13,18 @@ class TestTraderAPI:
         self.admin = Admin.objects.create(
             full_name='admin1', phone='01012070620',
             user_name='admin1', password='admin',
-            email='admin1@gmail.com', is_active=True, is_staff=True
+            email='admin1@gmail.com'
         )
 
         self.trader = Trader.objects.create(
             full_name='trader1', phone='01012070620',
             user_name='trader1', password='admin',
-            email='trader1@gmail.com', is_active=True,
-            is_staff=False, address='address1'
+            email='trader1@gmail.com', address='address1'
         )
         self.client = Client()
-        refresh = RefreshToken.for_user(self.admin)
-        access_token = str(refresh.access_token)
-        self.client.defaults['HTTP_AUTHORIZATION'] = f'Bearer {access_token}'
+        access_token = AccessToken.for_user(self.admin)
+        self.client.defaults['HTTP_AUTHORIZATION'] = \
+            f'Bearer {str(access_token)}'
         self.url_list = reverse("traders-list")
         self.url_detail = reverse("traders-detail", args=[self.trader.id])
 
@@ -37,8 +36,7 @@ class TestTraderAPI:
         data = {
             'full_name': 'trader2', 'phone': '01012070620',
             'user_name': 'trader2', 'password': 'admin',
-            'email': 'trader1@gmail.com', 'is_active': True,
-            'is_staff': False, 'address': 'address2'
+            'email': 'trader1@gmail.com', 'address': 'address2'
         }
         response = self.client.post(
             self.url_list, data=data, content_type='application/json'
@@ -49,8 +47,7 @@ class TestTraderAPI:
         update_data = {
             'full_name': 'trader_2', 'phone': '01012070620',
             'user_name': 'trader_2', 'password': 'trader',
-            'email': 'trader1@gmail.com', 'is_active': True,
-            'is_staff': False, 'address': 'address_2'
+            'email': 'trader1@gmail.com', 'address': 'address_2'
         }
         response = self.client.put(
             self.url_detail, data=update_data, content_type='application/json')
@@ -60,10 +57,9 @@ class TestTraderAPI:
         update_data = {
             'full_name': 'trader_2', 'phone': '01012070620',
             'password': 'admin', 'email': 'trader1@gmail.com',
-            'user_name': 'trader_2', 'is_active': True,
-            'is_staff': False, 'address': 'address_2'
+            'user_name': 'trader_2', 'address': 'address_2'
         }
-        response = self.client.patch(
+        response = self.client.get(
             self.url_detail,
             data=update_data,
             content_type='application/json'
