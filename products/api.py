@@ -1,4 +1,5 @@
 from rest_framework import status
+from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -50,8 +51,11 @@ class WishListViewSet(ModelViewSet):
 class BrandListApiView(APIView):
     def get(self, request):
         brands = Brand.objects.all()
-        serialize = BrandSerializer(brands, many=True)
-        return Response(serialize.data)
+        page_pagin = PageNumberPagination()
+        page_pagin.page_size = 10
+        pagin_brand = page_pagin.paginate_queryset(brands, request)
+        serialize = BrandSerializer(pagin_brand, many=True)
+        return page_pagin.get_paginated_response(serialize.data)
 
     def post(self, request):
         serializer = BrandSerializer(data=request.data)
