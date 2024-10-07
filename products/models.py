@@ -11,6 +11,13 @@ class Category(TimeStampedModel):
         return self.name
 
 
+class Brand(TimeStampedModel):
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+
+
 class Product(TimeStampedModel):
     name = models.CharField(max_length=100)
     price = models.FloatField()
@@ -18,6 +25,7 @@ class Product(TimeStampedModel):
     image = models.ImageField()
     purchase_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
