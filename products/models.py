@@ -22,7 +22,7 @@ class Product(TimeStampedModel):
     name = models.CharField(max_length=100)
     price = models.FloatField()
     quantity = models.IntegerField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='media/')
     purchase_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
