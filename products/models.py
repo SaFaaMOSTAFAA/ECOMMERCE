@@ -4,6 +4,11 @@ from django_extensions.db.models import TimeStampedModel
 from users.models import CustomerAccount
 
 
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(is_delete=False)
+
+
 class Category(TimeStampedModel):
     name = models.CharField(max_length=100)
 
@@ -26,6 +31,17 @@ class Product(TimeStampedModel):
     purchase_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    is_delete = models.BooleanField(default=False)
+
+    objects = ProductManager()
+    all_objects = models.Manager()
+
+    def delete(self):
+        self.is_delete = True
+        self.save()
+
+    def hard_delete(self):
+        super().delete()
 
     def __str__(self):
         return self.name
