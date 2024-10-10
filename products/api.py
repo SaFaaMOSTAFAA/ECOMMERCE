@@ -28,6 +28,15 @@ class ProductViewSet(ModelViewSet):
         return ProductSerializer
 
 
+class DeletedProductsViewSet(ModelViewSet):
+    queryset = Product.all_objects.filter(is_delete=True)
+
+    def get_serializer_class(self):
+        if self.request.method == 'GET':
+            return ListProductSerializer
+        return ProductSerializer
+
+
 class ProductReviewViewSet(ModelViewSet):
     queryset = ProductReview.objects.order_by('-id').select_related(
         'product', 'customer')
