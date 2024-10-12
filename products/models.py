@@ -26,6 +26,7 @@ class Product(TimeStampedModel):
     purchase_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
+    deleted_at = models.DateTimeField(null=True)
 
     def __str__(self):
         return self.name
