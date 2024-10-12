@@ -34,6 +34,9 @@ class Product(TimeStampedModel):
         self.deleted_at = timezone.now()
         self.save()
 
+    def get_queryset(self):
+        return super().get_queryset().filter(is_delete=False)
+
     def __str__(self):
         return self.name
 
