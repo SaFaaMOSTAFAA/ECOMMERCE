@@ -19,7 +19,7 @@ class CategoryViewSet(ModelViewSet):
 
 
 class ProductViewSet(ModelViewSet):
-    queryset = Product.objects.filter(deleted_at__isnull=True).order_by(
+    queryset = Product.objects.order_by(
         '-id').select_related('category', 'brand')
 
     def get_serializer_class(self):

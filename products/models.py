@@ -5,6 +5,11 @@ from django_extensions.db.models import TimeStampedModel
 from users.models import CustomerAccount
 
 
+class ProductManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted_at__isnull=True)
+
+
 class Category(TimeStampedModel):
     name = models.CharField(max_length=100)
 
@@ -28,14 +33,12 @@ class Product(TimeStampedModel):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
     deleted_at = models.DateTimeField(null=True)
+    objects = ProductManager()
 
     def delete(self):
 
         self.deleted_at = timezone.now()
         self.save()
-
-    def get_queryset(self):
-        return super().get_queryset().filter(is_delete=False)
 
     def __str__(self):
         return self.name
