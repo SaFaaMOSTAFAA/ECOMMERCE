@@ -59,15 +59,15 @@ class TestProducttAPI:
             image = Image.new('RGB', (100, 100), color='red')
             image.save(tmp, format='PNG')
             tmp.seek(0)
-            uploaded_image = SimpleUploadedFile(
-                name='test_image.png', content=tmp.read(),
-                content_type='image/png')
         update_data = {
             'name': 'product1', 'price': '58.55', 'quantity': '8',
-            'image': uploaded_image, 'purchase_price': '66.55'
+            'purchase_price': '66.55',
+            'category': self.category.id, 'brand': self.brand.id
         }
         response = self.client.patch(self.url_detail,
-                                     data=update_data, format='multipart')
+                                     data=update_data,
+                                     content_type='application/json')
+        print(response.data)
         assert response.status_code == 200
 
     def test_delete_product(self):
