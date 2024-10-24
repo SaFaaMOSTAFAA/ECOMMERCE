@@ -28,7 +28,6 @@ class TestProducttAPI:
             name='product1', price='55.55', quantity='6',
             image=uploaded_image, purchase_price='66.55',
             category=self.category, brand=self.brand)
-        print(f'this is product id {self.product.id}')
         self.client = Client()
         self.url_list = reverse("products-list")
         self.url_detail = reverse("products-detail", args=[self.product.id])
@@ -67,10 +66,14 @@ class TestProducttAPI:
         response = self.client.patch(self.url_detail,
                                      data=update_data,
                                      content_type='application/json')
-        print(response.data)
         assert response.status_code == 200
 
     def test_delete_product(self):
         response = self.client.delete(self.url_detail)
-        print(response.data)
         assert response.status_code == 204
+        product_exists_in_default = Product.objects.filter(id=self.product.id).exists()
+        assert not product_exists_in_default
+        product_exists_in_all_objects = Product.all_objects.filter(id=self.product.id).exists()
+        assert product_exists_in_all_objects
+        deleted_product = Product.all_objects.get(id=self.product.id)
+        assert deleted_product.deleted_at is not None
