@@ -10,6 +10,11 @@ class ProductManager(models.Manager):
         return super().get_queryset().filter(deleted_at__isnull=True)
 
 
+class CategoryManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted_at__isnull=True)
+
+
 class Category(TimeStampedModel):
     name = models.CharField(max_length=100)
 
@@ -19,6 +24,13 @@ class Category(TimeStampedModel):
 
 class Brand(TimeStampedModel):
     name = models.CharField(max_length=100)
+    deleted_at = models.DateTimeField(null=True)
+    objects = CategoryManager()
+    all_objects = models.Manager()
+
+    def delete(self):
+        self.deleted_at = timezone.now()
+        self.save()
 
     def __str__(self):
         return self.name

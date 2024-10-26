@@ -71,9 +71,11 @@ class TestProducttAPI:
     def test_delete_product(self):
         response = self.client.delete(self.url_detail)
         assert response.status_code == 204
-        product_exists_in_default = Product.objects.filter(id=self.product.id).exists()
+        product_exists_in_default = Product.objects.filter(
+            id=self.product.id).exists()
         assert not product_exists_in_default
-        product_exists_in_all_objects = Product.all_objects.filter(id=self.product.id).exists()
+        product_exists_in_all_objects = Product.all_objects.filter(
+            id=self.product.id).exists()
         assert product_exists_in_all_objects
         deleted_product = Product.all_objects.get(id=self.product.id)
         assert deleted_product.deleted_at is not None
