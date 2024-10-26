@@ -3,7 +3,7 @@ from django.test import Client
 from django.urls import reverse
 
 from cart.models import Cart, CartItem
-from products.models import Category, Product
+from products.models import Brand, Category, Product
 from users.models import CustomerAccount
 
 
@@ -51,10 +51,11 @@ class TestCartItemAPI:
             password='admin', email='customer1@gmail.com', address='address1')
         self.cart = Cart.objects.create(customer=self.customeraccount)
         self.category = Category.objects.create(name='category1')
+        self.brand = Brand.objects.create(name='brand1')
         self.product = Product.objects.create(
             name='product1', price='22.55', quantity='5',
             image='ecommerce.jpg', purchase_price='44.66',
-            category=self.category)
+            category=self.category, brand=self.brand)
         self.cartitem = CartItem.objects.create(
             product_cost='55.99', product=self.product, cart=self.cart)
         self.client = Client()
