@@ -5,23 +5,25 @@ from django_extensions.db.models import TimeStampedModel
 from users.models import CustomerAccount
 
 
+class SoftDeleteManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted_at__isnull=True)
+
+
 class SoftDelete(models.Model):
     deleted_at = models.DateTimeField(null=True)
 
     def delete(self):
         self.deleted_at = timezone.now()
         self.save()
+    objects = SoftDeleteManager()
+    all_objects = models.Manager()
 
     class Meta:
         abstract = True
 
 
-class ProductBrandManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(deleted_at__isnull=True)
-
-
-class Category(TimeStampedModel):
+class Category(TimeStampedModel, SoftDelete):
     name = models.CharField(max_length=100)
 
     def __str__(self):
@@ -30,8 +32,6 @@ class Category(TimeStampedModel):
 
 class Brand(TimeStampedModel, SoftDelete):
     name = models.CharField(max_length=100)
-    objects = ProductBrandManager()
-    all_objects = models.Manager()
 
     def __str__(self):
         return self.name
@@ -45,8 +45,6 @@ class Product(TimeStampedModel, SoftDelete):
     purchase_price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     brand = models.ForeignKey(Brand, on_delete=models.CASCADE)
-    objects = ProductBrandManager()
-    all_objects = models.Manager()
 
     def __str__(self):
         return self.name
