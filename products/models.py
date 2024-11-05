@@ -10,7 +10,7 @@ class SoftDeleteManager(models.Manager):
         return super().get_queryset().filter(deleted_at__isnull=True)
 
 
-class SoftDelete(models.Model):
+class SoftDelete(TimeStampedModel):
     deleted_at = models.DateTimeField(null=True)
 
     def delete(self):
@@ -23,21 +23,21 @@ class SoftDelete(models.Model):
         abstract = True
 
 
-class Category(TimeStampedModel, SoftDelete):
+class Category(TimeStampedModel):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
 
-class Brand(TimeStampedModel, SoftDelete):
+class Brand(SoftDelete):
     name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
 
 
-class Product(TimeStampedModel, SoftDelete):
+class Product(SoftDelete):
     name = models.CharField(max_length=100)
     price = models.FloatField()
     quantity = models.IntegerField()
