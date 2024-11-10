@@ -19,6 +19,7 @@ from users.serializers import (AdminSerializer, CustomerAccountSerializer,
 class AdminViewSet(ModelViewSet):
     queryset = Admin.objects.order_by('-id')
     serializer_class = AdminSerializer
+    lookup_field = 'uuid'
     filter_backends = [filters.SearchFilter]
     search_fields = ['full_name', 'user_name', 'phone']
 
