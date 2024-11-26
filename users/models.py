@@ -26,7 +26,6 @@ class UserAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
-    id = models.BigAutoField(primary_key=True)
     uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     full_name = models.CharField(max_length=100)
     phone = models.CharField(validators=[phone_validator], max_length=25)
