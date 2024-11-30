@@ -1,3 +1,5 @@
+import uuid
+
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,
                                         PermissionsMixin)
 from django.core.validators import RegexValidator
@@ -24,6 +26,7 @@ class UserAccountManager(BaseUserManager):
 
 
 class UserAccount(AbstractBaseUser, PermissionsMixin, TimeStampedModel):
+    uuid = models.UUIDField(default=uuid.uuid4, unique=True)
     full_name = models.CharField(max_length=100)
     phone = models.CharField(validators=[phone_validator], max_length=25)
     user_name = models.CharField(max_length=100, unique=True)
