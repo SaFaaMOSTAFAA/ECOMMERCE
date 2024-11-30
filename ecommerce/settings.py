@@ -16,7 +16,9 @@ from datetime import timedelta
 from pathlib import Path
 
 import environ
+import sentry_sdk
 from dotenv import load_dotenv
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -95,6 +97,24 @@ MIDDLEWARE = [
 ]
 if DEBUG:
     MIDDLEWARE.append('query_inspector.middleware.QueryCountMiddleware')
+
+sentry_sdk.init(
+    dsn="https://752625e2fff6d010e7eacc88eda0c3af@o4508088349032448.ingest.de.sentry.io/4508088351064144",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for tracing.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+)
+if not DEBUG:
+    sentry_sdk.init(
+        dsn="https://752625e2fff6d010e7eacc88eda0c3af@o4508088349032448.ingest.de.sentry.io/4508088351064144",
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0,
+        send_default_pii=True 
+    )
 
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_METHODS = [
